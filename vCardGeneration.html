@@ -64,6 +64,9 @@
     <label for="nombre">Nombre completo:</label>
     <input type="text" id="nombre" required>
 
+    <label for="puesto">Puesto:</label>
+    <input type="text" id="puesto" required>
+
     <label for="empresa">Empresa:</label>
     <input type="text" id="empresa" required>
 
@@ -80,17 +83,18 @@
   </form>
 
   <script>
-    const generarVCF = ({ nombre, empresa, telefono, email }) => {
+    const generarVCF = ({ nombre, puesto, empresa, telefono, email }) => {
       return `BEGIN:VCARD
 VERSION:3.0
 FN:${nombre}
+TITLE:${puesto}      
 ORG:${empresa}
 TEL;TYPE=WORK,VOICE:${telefono}
 EMAIL:${email}
 END:VCARD`;
     };
 
-    const templateHTML = ({ nombre, empresa, telefono, email, ubicacion, archivoVCF }) => `
+    const templateHTML = ({ nombre, puesto, empresa, telefono, email, ubicacion, archivoVCF }) => `
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -139,6 +143,12 @@ END:VCARD`;
       width: 100%;
       padding: 2rem 1rem;
     }
+    .puesto {
+      margin-top: -0.5rem;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      color: #111827; /* negro profundo del diseño base */
+    }
     @media (min-height: 700px) and (min-width: 600px) {
       .content-container { justify-content: center; }
     }
@@ -152,7 +162,8 @@ END:VCARD`;
       text-align: center;
     }
     .card h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-    .card h2 { font-size: 1.1rem; color: #b91c1c; margin-bottom: 1.5rem; }
+    .card h2 { font-size: 1.1rem; color: #111827; margin-bottom: 1.5rem; }
+    .card h3 { font-size: 1.1rem; color: #b91c1c; margin-bottom: 1.5rem; }
     .info { font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.6; }
     .info strong {
       display: block;
@@ -184,6 +195,7 @@ END:VCARD`;
       .card { padding: 1.5rem; border-radius: 12px; }
       .card h1 { font-size: 1.6rem; }
       .card h2 { font-size: 1rem; }
+      .card h3 { font-size: 1rem; }
       .info { font-size: 0.95rem; }
       .btn-download { font-size: 0.95rem; padding: 10px 16px; }
       .logo-fixed img { width: 200px; }
@@ -193,6 +205,7 @@ END:VCARD`;
       .card { padding: 1.2rem; }
       .card h1 { font-size: 1.4rem; }
       .card h2 { font-size: 0.95rem; }
+      .card h3 { font-size: 0.95rem; }      
       .logo-fixed img { width: 200px; }
       .logo-animado img { width: 90px; }
     }
@@ -208,7 +221,8 @@ END:VCARD`;
     </div>
     <div class="card">
       <h1>${nombre}</h1>
-      <h2>${empresa}</h2>
+      <h2 class="puesto">${puesto}</h2>
+      <h3>${empresa}</h3>
       <div class="info">
         <strong>Teléfono:</strong>${telefono}
         <strong>Email:</strong>${email}
@@ -231,6 +245,7 @@ END:VCARD`;
       e.preventDefault();
 
       const nombre = document.getElementById("nombre").value;
+      const puesto = document.getElementById("puesto").value;
       const empresa = document.getElementById("empresa").value;
       const telefono = document.getElementById("telefono").value;
       const email = document.getElementById("email").value;
@@ -239,8 +254,10 @@ END:VCARD`;
       const fileName = nombre.replace(/\s+/g, '') + ".vcf";
       const htmlName = nombre.replace(/\s+/g, '') + ".html";
 
-      const vcfContent = generarVCF({ nombre, empresa, telefono, email });
-      const htmlContent = templateHTML({ nombre, empresa, telefono, email, ubicacion, archivoVCF: fileName });
+      const vcfContent = generarVCF({ nombre, puesto, empresa, telefono, email });
+      const htmlContent = templateHTML({ nombre, puesto, empresa, telefono, email, ubicacion, archivoVCF: fileName });
+
+      if (!confirm("¿Deseas generar los archivos?")) return;
 
       // Descargar HTML
       const blobHtml = new Blob([htmlContent], { type: "text/html" });
