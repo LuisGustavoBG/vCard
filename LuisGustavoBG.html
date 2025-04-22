@@ -53,6 +53,14 @@
       font-weight: 500;
       color: #111827; /* negro profundo del diseño base */
     }
+    .email-link {
+      color: #1a0dab; /* azul tradicional de hipervínculos */
+      text-decoration: underline;
+      font-weight: 400;
+    }
+    .email-link:hover {
+      color: #0b0080;
+    }
     @media (min-height: 700px) and (min-width: 600px) {
       .content-container { justify-content: center; }
     }
@@ -129,7 +137,8 @@
       <h3>Palmex Alimentos</h3>
       <div class="info">
         <strong>Teléfono:</strong>+52 81 1531 6946
-        <strong>Email:</strong>gustavo.barrera@monarcasnacks.com
+        <strong>Email:</strong>
+        <a href="mailto:gustavo.barrera@monarcasnacks.com" class="email-link">gustavo.barrera@monarcasnacks.com</a>
         <strong>Ubicación:</strong>Santa Catarina, NL
       </div>
       <a href="LuisGustavoBG.vcf" class="btn-download" download="LuisGustavoBG.vcf">Agregar contacto</a>
