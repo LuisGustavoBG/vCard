@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjeta de Contacto</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #b91c1c, #7f1d1d);
+      color: #111827;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-animado {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: moverArriba 2s ease forwards;
+    }
+    .logo-animado img {
+      width: 120px;
+      height: auto;
+    }
+    .logo-fixed {
+      display: none;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      animation: fadeIn 1s ease forwards;
+    }
+    .logo-fixed img {
+      width: 240px;
+      height: auto;
+    }
+    .content-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 2rem 1rem;
+    }
+    .puesto {
+      margin-top: -0.5rem;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      color: #111827; /* negro profundo del diseño base */
+    }
+    @media (min-height: 700px) and (min-width: 600px) {
+      .content-container { justify-content: center; }
+    }
+    .card {
+      background-color: #ffffff;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .card h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .card h2 { font-size: 1.1rem; color: #111827; margin-bottom: 1.5rem; }
+    .card h3 { font-size: 1.1rem; color: #b91c1c; margin-bottom: 1.5rem; }
+    .info { font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.6; }
+    .info strong {
+      display: block;
+      margin-top: 1rem;
+      color: #b91c1c;
+    }
+    .btn-download {
+      background-color: #ffffff;
+      color: #b91c1c;
+      border: 2px solid #b91c1c;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-download:hover { background-color: #fef2f2; }
+    @keyframes moverArriba {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .card { padding: 1.5rem; border-radius: 12px; }
+      .card h1 { font-size: 1.6rem; }
+      .card h2 { font-size: 1rem; }
+      .card h3 { font-size: 1rem; }
+      .info { font-size: 0.95rem; }
+      .btn-download { font-size: 0.95rem; padding: 10px 16px; }
+      .logo-fixed img { width: 200px; }
+      .logo-animado img { width: 100px; }
+    }
+    @media (max-width: 480px) {
+      .card { padding: 1.2rem; }
+      .card h1 { font-size: 1.4rem; }
+      .card h2 { font-size: 0.95rem; }
+      .card h3 { font-size: 0.95rem; }      
+      .logo-fixed img { width: 200px; }
+      .logo-animado img { width: 90px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-animado" id="logoAnimado">
+    <img src="logo.png" alt="Logo animado" />
+  </div>
+  <div class="content-container" id="mainContent" style="display: none;">
+    <div class="logo-fixed" id="logoFijo">
+      <img src="logo2.png" alt="Logo fijo" />
+    </div>
+    <div class="card">
+      <h1>Perla Zambrano</h1>
+      <h2 class="puesto">IT Manager</h2>
+      <h3>Palmex Alimentos</h3>
+      <div class="info">
+        <strong>Teléfono:</strong>+52 81 2021 6417
+        <strong>Email:</strong>perla.zambrano@monarcasnacks.com
+        <strong>Ubicación:</strong>Santa Catarina, NL
+      </div>
+      <a href="PerlaZambrano.vcf" class="btn-download" download="PerlaZambrano.vcf">Agregar contacto</a>
+    </div>
+  </div>
+  <script>
+    setTimeout(() => {
+      document.getElementById("logoAnimado").style.display = "none";
+      document.getElementById("mainContent").style.display = "flex";
+      document.getElementById("logoFijo").style.display = "block";
+    }, 2000);
+ </script>
+</body>
+</html>
