@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador de Contactos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #b91c1c, #7f1d1d);
+      color: #111827;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 2rem auto;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #b91c1c;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #991b1b;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generador de Contacto</h1>
+  <form id="contactForm">
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" required>
+
+    <label for="empresa">Empresa:</label>
+    <input type="text" id="empresa" required>
+
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="ubicacion">Ubicación:</label>
+    <input type="text" id="ubicacion" required>
+
+    <button type="submit">Generar archivos</button>
+  </form>
+
+  <script>
+    const generarVCF = ({ nombre, empresa, telefono, email }) => {
+      return `BEGIN:VCARD
+VERSION:3.0
+FN:${nombre}
+ORG:${empresa}
+TEL;TYPE=WORK,VOICE:${telefono}
+EMAIL:${email}
+END:VCARD`;
+    };
+
+    const templateHTML = ({ nombre, empresa, telefono, email, ubicacion, archivoVCF }) => `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjeta de Contacto</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #b91c1c, #7f1d1d);
+      color: #111827;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-animado {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: moverArriba 2s ease forwards;
+    }
+    .logo-animado img {
+      width: 120px;
+      height: auto;
+    }
+    .logo-fixed {
+      display: none;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      animation: fadeIn 1s ease forwards;
+    }
+    .logo-fixed img {
+      width: 240px;
+      height: auto;
+    }
+    .content-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 2rem 1rem;
+    }
+    @media (min-height: 700px) and (min-width: 600px) {
+      .content-container { justify-content: center; }
+    }
+    .card {
+      background-color: #ffffff;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .card h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .card h2 { font-size: 1.1rem; color: #b91c1c; margin-bottom: 1.5rem; }
+    .info { font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.6; }
+    .info strong {
+      display: block;
+      margin-top: 1rem;
+      color: #b91c1c;
+    }
+    .btn-download {
+      background-color: #ffffff;
+      color: #b91c1c;
+      border: 2px solid #b91c1c;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-download:hover { background-color: #fef2f2; }
+    @keyframes moverArriba {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .card { padding: 1.5rem; border-radius: 12px; }
+      .card h1 { font-size: 1.6rem; }
+      .card h2 { font-size: 1rem; }
+      .info { font-size: 0.95rem; }
+      .btn-download { font-size: 0.95rem; padding: 10px 16px; }
+      .logo-fixed img { width: 200px; }
+      .logo-animado img { width: 100px; }
+    }
+    @media (max-width: 480px) {
+      .card { padding: 1.2rem; }
+      .card h1 { font-size: 1.4rem; }
+      .card h2 { font-size: 0.95rem; }
+      .logo-fixed img { width: 200px; }
+      .logo-animado img { width: 90px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-animado" id="logoAnimado">
+    <img src="logo.png" alt="Logo animado" />
+  </div>
+  <div class="content-container" id="mainContent" style="display: none;">
+    <div class="logo-fixed" id="logoFijo">
+      <img src="logo2.png" alt="Logo fijo" />
+    </div>
+    <div class="card">
+      <h1>${nombre}</h1>
+      <h2>${empresa}</h2>
+      <div class="info">
+        <strong>Teléfono:</strong>${telefono}
+        <strong>Email:</strong>${email}
+        <strong>Ubicación:</strong>${ubicacion}
+      </div>
+      <a href="${archivoVCF}" class="btn-download" download="${archivoVCF}">Agregar contacto</a>
+    </div>
+  </div>
+  <scr` + `ipt>
+    setTimeout(() => {
+      document.getElementById("logoAnimado").style.display = "none";
+      document.getElementById("mainContent").style.display = "flex";
+      document.getElementById("logoFijo").style.display = "block";
+    }, 2000);
+ </scr` + `ipt>
+</body>
+</html>`;
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value;
+      const empresa = document.getElementById("empresa").value;
+      const telefono = document.getElementById("telefono").value;
+      const email = document.getElementById("email").value;
+      const ubicacion = document.getElementById("ubicacion").value;
+
+      const fileName = nombre.replace(/\s+/g, '') + ".vcf";
+      const htmlName = nombre.replace(/\s+/g, '') + ".html";
+
+      const vcfContent = generarVCF({ nombre, empresa, telefono, email });
+      const htmlContent = templateHTML({ nombre, empresa, telefono, email, ubicacion, archivoVCF: fileName });
+
+      // Descargar HTML
+      const blobHtml = new Blob([htmlContent], { type: "text/html" });
+      const aHtml = document.createElement("a");
+      aHtml.href = URL.createObjectURL(blobHtml);
+      aHtml.download = htmlName;
+      aHtml.click();
+
+      // Descargar VCF
+      const blobVCF = new Blob([vcfContent], { type: "text/vcard" });
+      const aVcf = document.createElement("a");
+      aVcf.href = URL.createObjectURL(blobVCF);
+      aVcf.download = fileName;
+      aVcf.click();
+    });
+  </script>
+</body>
+</html>
